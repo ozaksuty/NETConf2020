@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Demo.Views.ExpanderPage">
+    <ContentPage.Content>
+        <StackLayout BindableLayout.ItemsSource="{Binding .}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <Expander ExpandAnimationEasing="{x:Static Easing.CubicIn}"
+                                  ExpandAnimationLength="500"
+                                  CollapseAnimationEasing="{x:Static Easing.CubicOut}"
+                                  CollapseAnimationLength="500">
+
+                        <Expander.Header>
+                            <Frame HasShadow="True">
+                                <Grid>
+                                    <Label Text="{Binding Name}"
+                                               FontAttributes="Italic"
+                                               FontSize="Small" />
+                                    <Image Source="expander.png"
+                                               HorizontalOptions="End"
+                                               VerticalOptions="Start">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image"
+                                                             Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=IsExpanded}"
+                                                             Value="True">
+                                                <Setter Property="Source"
+                                                            Value="expander.png" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </Grid>
+                            </Frame>
+                        </Expander.Header>
+                        <Expander.ContentTemplate>
+                            <DataTemplate>
+                                <StackLayout BindableLayout.ItemsSource="{Binding Products}"
+                                                 Padding="10"
+                                                 BackgroundColor="White">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="3*,1*">
+                                                <Label Text="{Binding Name}"
+                                                           Grid.Column="0"
+                                                           FontSize="Small" />
+                                                <Label Text="{Binding Price}"
+                                                           Grid.Column="1"
+                                                           FontSize="Small" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </DataTemplate>
+                        </Expander.ContentTemplate>
+                    </Expander>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
